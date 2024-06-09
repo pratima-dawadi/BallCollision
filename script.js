@@ -3,8 +3,8 @@ body.style.backgroundColor = "#f0f0f0";
 
 // Creating the boundary
 const boundary = document.createElement("div");
-boundary.style.width = "1800px";
-boundary.style.height = "850px";
+boundary.style.width = "90vw";
+boundary.style.height = "90vh";
 boundary.style.border = "2px solid red";
 boundary.style.position = "relative";
 boundary.style.margin = "auto";
@@ -127,8 +127,8 @@ function randomProperty() {
   const random_color = randomColor();
   const random_radius = 5 + Math.floor(Math.random() * 16);
 
-  const maxX = 1800 - random_radius * 2;
-  const maxY = 850 - random_radius * 2;
+  const maxX = boundary.clientWidth - random_radius * 2;
+  const maxY = boundary.clientHeight - random_radius * 2;
   const random_x = Math.ceil(Math.random() * maxX);
   const random_y = Math.ceil(Math.random() * maxY);
   const random_speed = Math.random() * (5 - 2) + 2;
