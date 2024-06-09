@@ -1,3 +1,8 @@
+//canvas
+const canvas = document.createElement("canvas");
+canvas.width = 800;
+canvas.height = 600;
+
 const body = document.querySelector("body");
 body.style.backgroundColor = "#f0f0f0";
 
