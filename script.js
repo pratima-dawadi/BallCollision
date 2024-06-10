@@ -115,15 +115,16 @@ class Ball {
   }
 }
 
+//Generating random color
+function randomColor() {
+  let r = Math.floor(Math.random() * 256);
+  let g = Math.floor(Math.random() * 256);
+  let b = Math.floor(Math.random() * 256);
+  return `rgb(${r},${g},${b})`;
+}
+
 // Random values for the ball properties
 function randomProperty() {
-  function randomColor() {
-    let r = Math.floor(Math.random() * 256);
-    let g = Math.floor(Math.random() * 256);
-    let b = Math.floor(Math.random() * 256);
-    return `rgb(${r},${g},${b})`;
-  }
-
   const randomColour = randomColor();
   const randomRadius = 5 + Math.floor(Math.random() * 16);
 
