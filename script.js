@@ -14,103 +14,103 @@ document.body.appendChild(boundary);
 // Creating the ball
 class Ball {
   constructor(
-    x_position = 0,
-    y_position = 0,
-    ball_radius = 20,
-    ball_color = "red",
-    ball_speed = 2
+    xPosition = 0,
+    yPosition = 0,
+    ballRadius = 20,
+    ballColor = "red",
+    ballSpeed = 2
   ) {
-    this.x_position = x_position;
-    this.y_position = y_position;
-    this.ball_radius = ball_radius;
-    this.ball_color = ball_color;
-    this.ball_speed = ball_speed;
+    this.xPosition = xPosition;
+    this.yPosition = yPosition;
+    this.ballRadius = ballRadius;
+    this.ballColor = ballColor;
+    this.ballSpeed = ballSpeed;
 
-    this.x_velocity = (Math.random() * 4 - 2) * this.ball_speed;
-    this.y_velocity = (Math.random() * 4 - 2) * this.ball_speed;
+    this.xVelocity = (Math.random() * 4 - 2) * this.ballSpeed;
+    this.yVelocity = (Math.random() * 4 - 2) * this.ballSpeed;
 
     this.element = document.createElement("div");
-    this.element.style.left = `${this.x_position}px`;
-    this.element.style.top = `${this.y_position}px`;
-    this.element.style.width = `${this.ball_radius * 2}px`;
-    this.element.style.height = `${this.ball_radius * 2}px`;
-    this.element.style.background = this.ball_color;
+    this.element.style.left = `${this.xPosition}px`;
+    this.element.style.top = `${this.yPosition}px`;
+    this.element.style.width = `${this.ballRadius * 2}px`;
+    this.element.style.height = `${this.ballRadius * 2}px`;
+    this.element.style.background = this.ballColor;
     this.element.style.position = "absolute";
     this.element.style.borderRadius = "50%";
   }
 
   // Control the movement of the ball
-  ball_movement() {
-    this.x_position += this.x_velocity;
-    this.y_position += this.y_velocity;
+  ballMovement() {
+    this.xPosition += this.xVelocity;
+    this.yPosition += this.yVelocity;
 
     // Checking collision with the boundary on x-axis
-    if (this.x_position <= 0) {
-      this.x_position = 0;
-      this.x_velocity *= -1;
+    if (this.xPosition <= 0) {
+      this.xPosition = 0;
+      this.xVelocity *= -1;
     }
-    if (this.x_position + this.ball_radius * 2 >= boundary.clientWidth) {
-      this.x_position = boundary.clientWidth - this.ball_radius * 2;
-      this.x_velocity *= -1;
+    if (this.xPosition + this.ballRadius * 2 >= boundary.clientWidth) {
+      this.xPosition = boundary.clientWidth - this.ballRadius * 2;
+      this.xVelocity *= -1;
     }
 
     // Checking collision with the boundary on y-axis
-    if (this.y_position <= 0) {
-      this.y_position = 0;
-      this.y_velocity *= -1;
+    if (this.yPosition <= 0) {
+      this.yPosition = 0;
+      this.yVelocity *= -1;
     }
-    if (this.y_position + this.ball_radius * 2 >= boundary.clientHeight) {
-      this.y_position = boundary.clientHeight - this.ball_radius * 2;
-      this.y_velocity *= -1;
+    if (this.yPosition + this.ballRadius * 2 >= boundary.clientHeight) {
+      this.yPosition = boundary.clientHeight - this.ballRadius * 2;
+      this.yVelocity *= -1;
     }
 
-    this.element.style.left = `${this.x_position}px`;
-    this.element.style.top = `${this.y_position}px`;
+    this.element.style.left = `${this.xPosition}px`;
+    this.element.style.top = `${this.yPosition}px`;
   }
 
   // Checking collision with another ball
-  ball_collision(next_ball) {
-    const x_distance = this.x_position - next_ball.x_position;
-    const y_distance = this.y_position - next_ball.y_position;
-    const total_distance = Math.sqrt(
-      x_distance * x_distance + y_distance * y_distance
+  ballCollision(nextBall) {
+    const xDistance = this.xPosition - nextBall.xPosition;
+    const yDistance = this.yPosition - nextBall.yPosition;
+    const totalDistance = Math.sqrt(
+      xDistance * xDistance + yDistance * yDistance
     );
 
-    if (total_distance < this.ball_radius + next_ball.ball_radius) {
+    if (totalDistance < this.ballRadius + nextBall.ballRadius) {
       // Elastic collision
       const v1x =
-        (this.x_velocity * (this.ball_radius - next_ball.ball_radius) +
-          2 * next_ball.ball_radius * next_ball.x_velocity) /
-        (this.ball_radius + next_ball.ball_radius);
+        (this.xVelocity * (this.ballRadius - nextBall.ballRadius) +
+          2 * nextBall.ballRadius * nextBall.xVelocity) /
+        (this.ballRadius + nextBall.ballRadius);
       const v1y =
-        (this.y_velocity * (this.ball_radius - next_ball.ball_radius) +
-          2 * next_ball.ball_radius * next_ball.y_velocity) /
-        (this.ball_radius + next_ball.ball_radius);
+        (this.yVelocity * (this.ballRadius - nextBall.ballRadius) +
+          2 * nextBall.ballRadius * nextBall.yVelocity) /
+        (this.ballRadius + nextBall.ballRadius);
       const v2x =
-        (next_ball.x_velocity * (next_ball.ball_radius - this.ball_radius) +
-          2 * this.ball_radius * this.x_velocity) /
-        (this.ball_radius + next_ball.ball_radius);
+        (nextBall.xVelocity * (nextBall.ballRadius - this.ballRadius) +
+          2 * this.ballRadius * this.xVelocity) /
+        (this.ballRadius + nextBall.ballRadius);
       const v2y =
-        (next_ball.y_velocity * (next_ball.ball_radius - this.ball_radius) +
-          2 * this.ball_radius * this.y_velocity) /
-        (this.ball_radius + next_ball.ball_radius);
+        (nextBall.yVelocity * (nextBall.ballRadius - this.ballRadius) +
+          2 * this.ballRadius * this.yVelocity) /
+        (this.ballRadius + nextBall.ballRadius);
 
-      this.x_velocity = v1x;
-      this.y_velocity = v1y;
-      next_ball.x_velocity = v2x;
-      next_ball.y_velocity = v2y;
+      this.xVelocity = v1x;
+      this.yVelocity = v1y;
+      nextBall.xVelocity = v2x;
+      nextBall.yVelocity = v2y;
 
       // Calculating overalap and adjusting position
-      const overlap_distance =
-        this.ball_radius + next_ball.ball_radius - total_distance;
-      const collision_angle = Math.atan2(y_distance, x_distance);
-      const overlapX = overlap_distance * Math.cos(collision_angle);
-      const overlapY = overlap_distance * Math.sin(collision_angle);
+      const overlapDistance =
+        this.ballRadius + nextBall.ballRadius - totalDistance;
+      const collisionAngle = Math.atan2(yDistance, xDistance);
+      const overlapX = overlapDistance * Math.cos(collisionAngle);
+      const overlapY = overlapDistance * Math.sin(collisionAngle);
 
-      this.x_position += overlapX / 2;
-      this.y_position += overlapY / 2;
-      next_ball.x_position -= overlapX / 2;
-      next_ball.y_position -= overlapY / 2;
+      this.xPosition += overlapX / 2;
+      this.yPosition += overlapY / 2;
+      nextBall.xPosition -= overlapX / 2;
+      nextBall.yPosition -= overlapY / 2;
     }
   }
 }
@@ -124,53 +124,47 @@ function randomProperty() {
     return `rgb(${r},${g},${b})`;
   }
 
-  const random_color = randomColor();
-  const random_radius = 5 + Math.floor(Math.random() * 16);
+  const randomColour = randomColor();
+  const randomRadius = 5 + Math.floor(Math.random() * 16);
 
-  const maxX = boundary.clientWidth - random_radius * 2;
-  const maxY = boundary.clientHeight - random_radius * 2;
-  const random_x = Math.ceil(Math.random() * maxX);
-  const random_y = Math.ceil(Math.random() * maxY);
-  const random_speed = Math.random() * (5 - 2) + 2;
+  const maxX = boundary.clientWidth - randomRadius * 2;
+  const maxY = boundary.clientHeight - randomRadius * 2;
+  const randomX = Math.ceil(Math.random() * maxX);
+  const randomY = Math.ceil(Math.random() * maxY);
+  const randomSpeed = Math.random() * (5 - 2) + 2;
 
   return {
-    x_position: random_x,
-    y_position: random_y,
-    ball_radius: random_radius,
-    ball_color: random_color,
-    ball_speed: random_speed,
+    xPosition: randomX,
+    yPosition: randomY,
+    ballRadius: randomRadius,
+    ballColor: randomColour,
+    ballSpeed: randomSpeed,
   };
 }
 
 // Creating the ball array
 const ballArray = [];
-const ball_count = 100 + Math.floor(Math.random() * 300);
-for (let i = 0; i < ball_count; i++) {
-  const { x_position, y_position, ball_radius, ball_color, ball_speed } =
+const balllCount = 100 + Math.floor(Math.random() * 300);
+for (let i = 0; i < balllCount; i++) {
+  const { xPosition, yPosition, ballRadius, ballColor, ballSpeed } =
     randomProperty();
-  const ball = new Ball(
-    x_position,
-    y_position,
-    ball_radius,
-    ball_color,
-    ball_speed
-  );
+  const ball = new Ball(xPosition, yPosition, ballRadius, ballColor, ballSpeed);
   boundary.appendChild(ball.element);
   ballArray.push(ball);
 }
 
-function moving_ball() {
+function movingBall() {
   ballArray.forEach((ball1) => {
-    ball1.ball_movement();
+    ball1.ballMovement();
 
     for (let i = 0; i < ballArray.length; i++) {
       if (ball1 !== ballArray[i]) {
-        ball1.ball_collision(ballArray[i]);
+        ball1.ballCollision(ballArray[i]);
       }
     }
   });
 
-  requestAnimationFrame(moving_ball);
+  requestAnimationFrame(movingBall);
 }
 
-moving_ball();
+movingBall();
