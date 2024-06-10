@@ -70,8 +70,16 @@ class Ball {
 
   // Checking collision with another ball
   ballCollision(nextBall) {
-    const xDistance = this.xPosition - nextBall.xPosition;
-    const yDistance = this.yPosition - nextBall.yPosition;
+    const xDistance =
+      this.xPosition +
+      this.ballRadius -
+      nextBall.xPosition -
+      nextBall.ballRadius;
+    const yDistance =
+      this.yPosition +
+      this.ballRadius -
+      nextBall.yPosition -
+      nextBall.ballRadius;
     const totalDistance = Math.sqrt(
       xDistance * xDistance + yDistance * yDistance
     );
@@ -155,12 +163,12 @@ for (let i = 0; i < balllCount; i++) {
 }
 
 function movingBall() {
-  ballArray.forEach((ball1) => {
-    ball1.ballMovement();
+  ballArray.forEach((ball) => {
+    ball.ballMovement();
 
     for (let i = 0; i < ballArray.length; i++) {
-      if (ball1 !== ballArray[i]) {
-        ball1.ballCollision(ballArray[i]);
+      if (ball !== ballArray[i]) {
+        ball.ballCollision(ballArray[i]);
       }
     }
   });
